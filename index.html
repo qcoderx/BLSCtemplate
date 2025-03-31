@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLSC Python & Drone Tech Scholars Program</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8f0;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Header - Always visible animations */
+        .header-top {
+            background: white;
+            padding: 25px 0 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-30px);
+            animation: headerDropIn 0.6s ease-out 0.1s forwards;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        @keyframes headerDropIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-title-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: logoGroupScaleIn 0.5s ease-out 0.3s forwards;
+            max-width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        @keyframes logoGroupScaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .logo-container img {
+            height: 80px;
+            width: auto;
+            transform: rotateY(90deg);
+            animation: logoFlipIn 0.7s ease-out 0.4s forwards;
+            max-width: 100%;
+        }
+
+        @keyframes logoFlipIn {
+            to {
+                transform: rotateY(0deg);
+            }
+        }
+
+        .program-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #1a5a73, #228B22);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: titleSlideIn 0.5s ease-out 0.6s forwards;
+            word-wrap: break-word;
+        }
+
+        @keyframes titleSlideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Motto Rotation */
+        .motto-container {
+            height: 40px;
+            position: relative;
+            margin: 10px auto 0 auto;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: mottoFadeIn 0.5s ease-out 0.8s forwards;
+            max-width: 90%;
+        }
+
+        @keyframes mottoFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .motto {
+            position: absolute;
+            width: 100%;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #228B22;
+            font-style: italic;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            top: 0;
+            left: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .motto.active {
+            opacity: 1;
+        }
+
+        /* Slideshow */
+        .slideshow-container {
+            background-color: #FFD700;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.97);
+            transition: all 0.6s ease-out;
+            width: 100%;
+        }
+
+        .slideshow-container.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .slideshow-container img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .slideshow-container img.active {
+            opacity: 1;
+        }
+
+        /* Main Content */
+        .container {
+            padding: 30px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #0D3747;
+            padding-bottom: 70px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .program-info {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #e63946;
+            opacity: 0;
+            transition: all 0.5s ease-out;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+
+        .program-info:nth-child(1) {
+            transform: perspective(1000px) rotateX(90deg) translateY(30px);
+            transition-delay: 0.5s;
+        }
+
+        .program-info:nth-child(2) {
+            transform: perspective(1000px) rotateY(90deg) translateX(30px);
+            transition-delay: 0.7s;
+        }
+
+        .program-info.visible {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0) rotateY(0) translate(0);
+        }
+
+        .program-info h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            color: #228B22;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .program-info p {
+            margin-bottom: 20px;
+            color: #4d4d4d;
+        }
+
+        /* Highlighted eligibility section */
+        .eligibility-highlight {
+            background-color: #FFFACD;
+            padding: 15px;
+            border-left: 4px solid #FFD700;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .eligibility-highlight h3 {
+            color: #1a5a73;
+            margin-top: 0;
+        }
+        
+        .eligibility-highlight ul {
+            padding-left: 20px;
+        }
+        
+        .eligibility-highlight li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        /* Button - Faster timing */
+        .join-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(to right, #228B22, #1a5a73);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.3s ease-out 0.5s;
+        }
+
+        .join-button.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .join-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #228B22;
+            padding: 10px;
+            color: white;
+            font-size: 0.9rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 0.5s ease-out 1.6s;
+            box-sizing: border-box;
+        }
+
+        footer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animation Classes */
+        .visible {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header-top">
+        <div class="logo-title-group">
+            <div class="logo-container">
+                <img src="https://i.ibb.co/Y7kTT9DD/Group-1707486260.png" alt="BLSC Logo">
+            </div>
+            <div>
+                <h1 class="program-name">BLSC Python & Drone Tech Scholars Program</h1>
+            </div>
+        </div>
+        <div class="motto-container">
+            <p class="motto active">Your premier choice in drone career</p>
+            <p class="motto">Drone technology at its finest</p>
+            <p class="motto">Shaping the future of aerial innovation</p>
+        </div>
+    </header>
+
+    <!-- SLIDESHOW -->
+    <div class="slideshow-container">
+        <img src="https://i.ibb.co/qFrDd8ms/IMG-20250320-WA0186.jpg" alt="Drone Program" class="active">
+        <img src="https://i.ibb.co/8DRvCqGm/IMG-20250219-WA0002.jpg" alt="Python Program">
+    </div>
+    
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <div class="program-info">
+            <h2>About Us</h2>
+            <p>The Blended Learning and Study Center (BLSC) is at the forefront of educational transformation, integrating modern technological advancements with innovative teaching methodologies. Our mission is to make STEM (Science, Technology, Engineering, and Mathematics), drone technology, and Python programming more accessible and impactful for learners across various backgrounds. By leveraging blended learning techniques, we aim to bridge the gap between theoretical knowledge and hands-on experience, preparing students for real-world applications and future careers in technology-driven industries.
+BLSC is revolutionizing education through cutting-edge Python programming and Drone Technology training. Our scholars program bridges the gap between theoretical knowledge and practical skills, preparing students for high-demand careers in emerging technologies. We offer comprehensive training that combines classroom learning with hands-on experience in drone operations and Python automation.</p>
+        </div>
+        <div class="program-info">
+            <h2>The Scholarship Program</h2>
+            <p><h3>BLSC Scholarship Program: Making Drone Education Accessible</h3>
+
+As part of our mission to democratize access to technology education, BLSC is launching a scholarship program designed to train young African students in drone technology and the role Python plays in it. This program will cover 95% of the total training cost, ensuring that financial constraints do not hinder passionate learners from gaining these critical skills.
+
+<div class="eligibility-highlight">
+    <h3>Eligibility Criteria:</h3>
+    <ul>
+        <li>Must be at least 16 years old</li>
+        <li>Must be of African descent</li>
+    </ul>
+</div>
+
+This scholarship aims to empower the next generation of drone experts and Python programmers, equipping them with the knowledge and hands-on experience needed to excel in this cutting-edge field.
+
+Expanding Our Reach: Online and Global Learning
+
+Recognizing the power of digital education, BLSC is scaling its impact by offering online courses to reach over 10,000 learners globally. Our online programs maintain the same high-quality instruction, interactive content, and mentorship that define our in-person sessions. By utilizing cloud-based learning platforms, video lectures, and virtual labs, we ensure that no student is left behind in the digital age.
+
+Conclusion: Shaping the Future of Education
+
+BLSC is more than just an educational institution—it is a movement towards a smarter, more technologically driven world. Our mission is to empower individuals with the knowledge and skills needed to thrive in the ever-evolving landscape of STEM, drone technology, and Python programming. By integrating blended learning, industry collaboration, and real-world applications, we are setting the foundation for a brighter, more innovative future in education.
+
+Join us at BLSC, where learning meets innovation, and the future is built today!</p>
+            <a href="#" class="join-button">APPLY NOW</a>
+        </div>
+    </div>
+    
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 BLSC Drone Academy. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Motto rotation (faster)
+            const mottos = document.querySelectorAll('.motto');
+            let currentMotto = 0;
+            
+            function rotateMottos() {
+                mottos[currentMotto].classList.remove('active');
+                currentMotto = (currentMotto + 1) % mottos.length;
+                mottos[currentMotto].classList.add('active');
+                setTimeout(rotateMottos, 2000);
+            }
+            
+            setTimeout(rotateMottos, 2000);
+            
+            // Slideshow (faster)
+            const slides = document.querySelectorAll('.slideshow-container img');
+            let currentSlide = 0;
+            
+            function nextSlide() {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+            
+            setInterval(nextSlide, 2500);
+            
+            // Scroll animations
+            function checkVisibility() {
+                const elements = document.querySelectorAll('.slideshow-container, .container, .program-info, .join-button, footer');
+                
+                elements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementBottom = element.getBoundingClientRect().bottom;
+                    const isVisible = (elementTop < window.innerHeight) && (elementBottom >= 0);
+                    
+                    if (isVisible) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Initial check
+            checkVisibility();
+            
+            // Check on scroll
+            window.addEventListener('scroll', checkVisibility);
+        });
+    </script>
+</body>
+</html>
